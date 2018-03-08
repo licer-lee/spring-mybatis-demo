@@ -52,7 +52,7 @@ public class TypeController {
 		return ts.findAll();
 	}
 	
-	@RequestMapping("delete1/{id}")
+	@RequestMapping("delete/{id}")
 	@ResponseBody
 	public Map<String, Object> delete(@PathVariable("id") String id){
 		return ts.delete(id);

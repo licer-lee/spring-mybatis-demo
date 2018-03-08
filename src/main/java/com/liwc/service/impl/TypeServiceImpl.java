@@ -30,14 +30,19 @@ public class TypeServiceImpl implements TypeService {
 
 	@Override
 	public void save(Type t) {
-			mapper.save(t);;
+		mapper.save(t);;
 	}
 
 	@Override
 	public Map<String, Object> delete(String id) {
 		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("msg", "deleted!");
+		
 		mapper.deleteById(id);;
-		return (Map<String, Object>) new HashMap<String, Object>().put("msg", "deleted!");
+		
+		return map;
 	}
 
 

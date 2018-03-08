@@ -16,7 +16,7 @@ public interface TypeMapper {
 
 	void save(Type t);
 	
-	@Delete("delete from account_type where account_type_id = #{id}")
+	@Delete("delete from ACCOUNT_TYPE where ACCOUNT_TYPE_ID = #{id}")
 	void deleteById(String id);
 	
 }
