@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liwc.mapper.TypeMapper">
+	
+	<resultMap id="BaseResultMap" type="com.liwc.model.Type">
+		<id column="ACCOUNT_TYPE_ID" jdbcType="VARCHAR" property="typeId" />
+		<result column="ACCOUNT_TYPE_CODE" jdbcType="VARCHAR" property="typeCode" />
+		<result column="ACCOUNT_TYPE_NAME" jdbcType="VARCHAR" property="typeName" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		ACCOUNT_TYPE_ID, ACCOUNT_TYPE_CODE, ACCOUNT_TYPE_NAME
+	</sql>
+	
+	
+	<select id="byId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select * from ACCOUNT_TYPE 
+		where ACCOUNT_TYPE_ID = #{typeId, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from ACCOUNT_TYPE 
+	</select>
+	
+	
+	<insert id="save" parameterType="com.liwc.model.Type">
+		insert into ACCOUNT_TYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				ACCOUNT_TYPE_ID,
+			</if>
+			<if test="typeCode != null">
+				ACCOUNT_TYPE_CODE,
+			</if>
+			<if test="typeName != null">
+				ACCOUNT_TYPE_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				#{typeId,jdbcType=VARCHAR},
+			</if>
+			<if test="typeCode != null">
+				#{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="typeName != null">
+				#{typeName,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	
+</mapper>

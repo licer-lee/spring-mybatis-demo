@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx
+    	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
 	<bean
@@ -15,29 +20,61 @@
 	<!-- 连接池 -->
 	<bean id="myDataSource" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
-		
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		
-		<property name="initialSize" value="${jdbc.initialSize}" />
-		<property name="minIdle" value="${jdbc.minIdle}" />
-		<property name="maxActive" value="${jdbc.maxActive}" />
-		<property name="maxWait" value="${jdbc.maxWait}" />
-		<property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
-		<property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
-		<property name="validationQuery" value="${jdbc.validationQuery}" />
-		<property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
-		<property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
-		<property name="testOnReturn" value="${jdbc.testOnReturn}" />
-		<property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
-		<property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
-		<property name="filters" value="${jdbc.filters}" />
-		<!-- 关闭abanded连接时输出错误日志 -->
-		<property name="logAbandoned" value="true" />
-
 	</bean>
 
+	<!-- sessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:com/liwc/mapper/*.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.liwc.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+
+	<!-- 事务管理器 -->
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="myDataSource" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="true" />
+
+
+	<!-- 启用aop自动代理 -->
+	<aop:aspectj-autoproxy />
+	
+	<aop:config>
+		<!-- 定义切入点 -->
+		<aop:pointcut id="txPointcut" expression="execution(* com.liwc.service..*.*(..))"></aop:pointcut>
+		<!-- 关联切入点与待织入的逻辑 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+	
+	<!-- 定义织入的逻辑（事物管理器） -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- 修改操作设置 -->
+			<tx:method name="save*" propagation="REQUIRED" isolation="REPEATABLE_READ" />
+			<!-- 查询操作设置只读事物 -->
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	
 
 
 </beans>

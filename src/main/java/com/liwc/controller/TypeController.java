@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.liwc.model.Type;
@@ -41,13 +42,20 @@ public class TypeController {
 	@ResponseBody
 	public Type save(Type t){
 		
-		return ts.save(t);
+		ts.save(t);
+		return t;
 	}
 
 	@ResponseBody
 	@RequestMapping("list")
 	public List<Type> list(){
 		return ts.findAll();
+	}
+	
+	@RequestMapping("delete1/{id}")
+	@ResponseBody
+	public Map<String, Object> delete(@PathVariable("id") String id){
+		return ts.delete(id);
 	}
 
 

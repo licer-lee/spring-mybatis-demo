@@ -31,7 +31,7 @@
                 <td>${t.typeId}</td>
                 <td>${t.typeCode}</td>
                 <td>${t.typeName}</td>
-                <td><a href="${pageContext.request.contextPath}/file/download/${a.fileId}">下载</a> </td>
+                <td><a href="${pageContext.request.contextPath}/type/delete1/${a.fileId}">删除</a> </td>
             </tr>
         </c:forEach>
         </tbody>

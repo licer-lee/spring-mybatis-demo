@@ -1,8 +1,9 @@
 package com.liwc.service;
 
-import com.liwc.model.Type;
-
 import java.util.List;
+import java.util.Map;
+
+import com.liwc.model.Type;
 
 public interface TypeService {
 
@@ -11,7 +12,8 @@ public interface TypeService {
 
 	List<Type> findAll();
 	
-	Type save(Type t);
+	void save(Type t);
 	
+	Map<String, Object> delete(String id);
 	
 }

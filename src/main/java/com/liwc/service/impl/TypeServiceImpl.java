@@ -1,12 +1,13 @@
 package com.liwc.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.liwc.dao.TypeDao;
+import com.liwc.mapper.TypeMapper;
 import com.liwc.model.Type;
 import com.liwc.service.TypeService;
 
@@ -14,28 +15,33 @@ import com.liwc.service.TypeService;
 public class TypeServiceImpl implements TypeService {
 
 	@Autowired
-	// 默认小写bean
-	@Qualifier(value="typeDaoHibernateImpl")
-	private TypeDao dao ;
-
-
+	private TypeMapper mapper;
+	
+	
 	@Override
 	public Type find(String id) {
-		
-		return dao.byId(id);
+		return mapper.byId(id);
 	}
 
 	@Override
 	public List<Type> findAll() {
-		return dao.findAll();
+		return mapper.findAll();
 	}
 
-	
 	@Override
-	public Type save(Type t) {
-		
-		return dao.save(t);
+	public void save(Type t) {
+			mapper.save(t);;
 	}
+
+	@Override
+	public Map<String, Object> delete(String id) {
+		
+		mapper.deleteById(id);;
+		return (Map<String, Object>) new HashMap<String, Object>().put("msg", "deleted!");
+	}
+
+
+
 
 
 }
