@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liwc.mapper.AccountMapper">
+
+	<resultMap id="BaseResultMap" type="com.liwc.model.Account">
+		<!-- <constructor> <idArg column="ID" javaType="int" /> </constructor> -->
+
+		<id column="ID" jdbcType="INTEGER" property="id" />
+
+		<result column="ACCOUNT_STR" jdbcType="VARCHAR" property="accountStr" />
+		<result column="PASSWD_STR" jdbcType="VARCHAR" property="passwdStr" />
+		<result column="NOTE" jdbcType="VARCHAR" property="note" />
+
+		<association property="type" javaType="com.liwc.model.Type">
+			<id property="typeId" column="ACCOUNT_TYPE_ID" />
+			<result property="typeCode" column="ACCOUNT_TYPE_CODE" />
+			<result property="typeName" column="ACCOUNT_TYPE_NAME" />
+
+		</association>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID, ACCOUNT_STR, PASSWD_STR, NOTE
+	</sql>
+
+
+	<select id="byId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select a.ID, a.TYPE_ID,
+		at.ACCOUNT_TYPE_ID,at.ACCOUNT_TYPE_CODE,at.ACCOUNT_TYPE_NAME,
+		a.ACCOUNT_STR,
+		a.PASSWD_STR, a.NOTE
+		from ACCOUNT a
+		join ACCOUNT_TYPE at
+		on
+		a.TYPE_ID=at.ACCOUNT_TYPE_ID
+		where a.ID = #{id, jdbcType=INTEGER}
+	</select>
+
+	<select id="findAll" resultMap="BaseResultMap">
+		select * from ACCOUNT_TYPE
+	</select>
+
+
+	<insert id="save" parameterType="com.liwc.model.Type"
+		useGeneratedKeys="true" keyProperty="typeId">
+		insert into ACCOUNT_TYPE
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeCode != null">
+				ACCOUNT_TYPE_CODE,
+			</if>
+			<if test="typeName != null">
+				ACCOUNT_TYPE_NAME,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeCode != null">
+				#{typeCode,jdbcType=VARCHAR},
+			</if>
+			<if test="typeName != null">
+				#{typeName,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateById" parameterType="com.liwc.model.Type">
+		update ACCOUNT_TYPE
+		set
+		ACCOUNT_TYPE_CODE = #{typeCode},
+		ACCOUNT_TYPE_NAME = #{typeName}
+		where
+		ACCOUNT_TYPE_ID = #{typeId}
+	</update>
+
+</mapper>
