@@ -10,13 +10,15 @@ import com.liwc.model.Type;
 @MapperScan
 public interface TypeMapper {
 
-	Type byId(String id);
+	Type byId(int id);
 
 	List<Type> findAll();
 
 	int save(Type t);
 	
 	@Delete("delete from ACCOUNT_TYPE where ACCOUNT_TYPE_ID = #{id}")
-	int deleteById(String id);
+	int deleteById(int id);
 	
+	
+	int updateById(Type t);
 }

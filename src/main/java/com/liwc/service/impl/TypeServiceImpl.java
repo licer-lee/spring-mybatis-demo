@@ -19,7 +19,7 @@ public class TypeServiceImpl implements TypeService {
 	
 	
 	@Override
-	public Type find(String id) {
+	public Type find(int id) {
 		return mapper.byId(id);
 	}
 
@@ -34,16 +34,19 @@ public class TypeServiceImpl implements TypeService {
 	}
 
 	@Override
-	public Map<String, Object> delete(String id) {
+	public Map<String, Object> delete(int id) {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
-		
 		int effectCount = mapper.deleteById(id);;
 		map.put("msg", "deleted!");
 		map.put("effectCount", effectCount);
 		
 		return map;
+	}
+
+	@Override
+	public int updateById(Type t) {
+		return mapper.updateById(t);
 	}
 
 

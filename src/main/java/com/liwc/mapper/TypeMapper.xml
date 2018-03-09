@@ -3,7 +3,7 @@
 <mapper namespace="com.liwc.mapper.TypeMapper">
 	
 	<resultMap id="BaseResultMap" type="com.liwc.model.Type">
-		<id column="ACCOUNT_TYPE_ID" jdbcType="VARCHAR" property="typeId" />
+		<id column="ACCOUNT_TYPE_ID" jdbcType="INTEGER" property="typeId" />
 		<result column="ACCOUNT_TYPE_CODE" jdbcType="VARCHAR" property="typeCode" />
 		<result column="ACCOUNT_TYPE_NAME" jdbcType="VARCHAR" property="typeName" />
 	</resultMap>
@@ -13,9 +13,9 @@
 	</sql>
 	
 	
-	<select id="byId" parameterType="java.lang.String" resultMap="BaseResultMap">
+	<select id="byId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select * from ACCOUNT_TYPE 
-		where ACCOUNT_TYPE_ID = #{typeId, jdbcType=VARCHAR}
+		where ACCOUNT_TYPE_ID = #{typeId, jdbcType=INTEGER}
 	</select>
 	
 	<select id="findAll" resultMap="BaseResultMap">
@@ -23,12 +23,10 @@
 	</select>
 	
 	
-	<insert id="save" parameterType="com.liwc.model.Type">
+	<insert id="save" parameterType="com.liwc.model.Type" useGeneratedKeys="true"
+		 keyProperty="typeId" >
 		insert into ACCOUNT_TYPE
 		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="typeId != null">
-				ACCOUNT_TYPE_ID,
-			</if>
 			<if test="typeCode != null">
 				ACCOUNT_TYPE_CODE,
 			</if>
@@ -37,9 +35,6 @@
 			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="typeId != null">
-				#{typeId,jdbcType=VARCHAR},
-			</if>
 			<if test="typeCode != null">
 				#{typeCode,jdbcType=VARCHAR},
 			</if>
@@ -48,5 +43,12 @@
 			</if>
 		</trim>
 	</insert>
+	
+	<update id="updateById" parameterType="com.liwc.model.Type" >
+		update ACCOUNT_TYPE
+		set ACCOUNT_TYPE_CODE = #{typeCode},
+			ACCOUNT_TYPE_NAME = #{typeName}
+		where ACCOUNT_TYPE_ID = #{typeId}
+	</update>
 	
 </mapper>

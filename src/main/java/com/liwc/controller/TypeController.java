@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,7 +34,7 @@ public class TypeController {
 	
 	@RequestMapping(value="get/{id}", method=RequestMethod.GET)
 	@ResponseBody
-	public Type getType(@PathVariable("id") String id){
+	public Type getType(@PathVariable("id") int id){
 		return ts.find(id);
 	}
 
@@ -44,6 +45,8 @@ public class TypeController {
 		ts.save(t);
 		return t;
 	}
+	
+	
 
 	@ResponseBody
 	@RequestMapping("list")
@@ -53,9 +56,27 @@ public class TypeController {
 	
 	@RequestMapping("delete/{id}")
 	@ResponseBody
-	public Map<String, Object> delete(@PathVariable("id") String id){
+	public Map<String, Object> delete(@PathVariable("id") int id){
 		return ts.delete(id);
 	}
 
+	@RequestMapping("info/{id}")
+	public String info(@PathVariable("id") int id, Model model){
+		
+		Type t = ts.find(id);
+		model.addAttribute("t", t);
+		return "type/info";
+		
+	}
+	
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	@ResponseBody
+	public Type UpdateType(Type t){
+		
+		ts.updateById(t);
+		return t;
+	}
+	
+	
 
 }

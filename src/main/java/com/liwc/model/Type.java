@@ -10,16 +10,18 @@ public class Type implements Serializable{
 	 */
 	private static final long serialVersionUID = 3853711593995407361L;
 
-	String typeId;
-
-	String typeName;
+	int typeId;
 
 	String typeCode;
 	
-	public String getTypeId() {
+	String typeName;
+
+	
+	
+	public int getTypeId() {
 		return typeId;
 	}
-	public void setTypeId(String typeId) {
+	public void setTypeId(int typeId) {
 		this.typeId = typeId;
 	}
 	public String getTypeName() {
