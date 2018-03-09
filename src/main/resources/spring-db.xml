@@ -29,14 +29,15 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="myDataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
-		<property name="mapperLocations">
+		<!-- mapper接口和xml文件不在同一目录下，需设置mapperLocations -->
+		<!-- <property name="mapperLocations">
 			<list>
 				<value>classpath:com/liwc/mapper/*.xml</value>
 			</list>
-		</property>
+		</property> -->
 	</bean>
 	
-	
+	<!-- 扫描注册mapper接口，自动注入mapper.xml  -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.liwc.mapper" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
@@ -49,14 +50,15 @@
 		<property name="dataSource" ref="myDataSource" />
 	</bean>
 
-	<tx:annotation-driven transaction-manager="txManager"
-		proxy-target-class="true" />
+	<!-- 启用注解事物 @Transactional -->
+	<!-- <tx:annotation-driven transaction-manager="txManager"
+		proxy-target-class="true" /> -->
 
 
-	<!-- 启用aop自动代理 -->
+	<!-- 启用声明式事物：启用aop自动代理 -->
 	<aop:aspectj-autoproxy />
 	
-	<!-- aop声明式事物管理 -->
+	<!-- aop声明式事物 -->
 	<aop:config>
 		<!-- 定义切入点 -->
 		<aop:pointcut id="txPointcut" expression="execution(* com.liwc.service..*.*(..))"></aop:pointcut>

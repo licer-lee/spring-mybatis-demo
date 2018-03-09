@@ -30,7 +30,7 @@ public class TypeServiceImpl implements TypeService {
 
 	@Override
 	public void save(Type t) {
-		mapper.save(t);;
+		int count = mapper.save(t);
 	}
 
 	@Override
@@ -38,9 +38,10 @@ public class TypeServiceImpl implements TypeService {
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		map.put("msg", "deleted!");
 		
-		mapper.deleteById(id);;
+		int effectCount = mapper.deleteById(id);;
+		map.put("msg", "deleted!");
+		map.put("effectCount", effectCount);
 		
 		return map;
 	}

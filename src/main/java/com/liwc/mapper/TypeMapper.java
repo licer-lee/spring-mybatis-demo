@@ -14,9 +14,9 @@ public interface TypeMapper {
 
 	List<Type> findAll();
 
-	void save(Type t);
+	int save(Type t);
 	
 	@Delete("delete from ACCOUNT_TYPE where ACCOUNT_TYPE_ID = #{id}")
-	void deleteById(String id);
+	int deleteById(String id);
 	
 }

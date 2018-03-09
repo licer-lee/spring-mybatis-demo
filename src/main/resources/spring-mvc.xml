@@ -16,7 +16,7 @@
 	<!-- org.springframework.web.servlet.PageNotFound - No mapping found for 
 		HTTP request with URI [/v20/activity/test/] in DispatcherServlet with name 
 		'appServlet' -->
-	<!-- 识别匹配@Controller -->
+	<!-- 启用识别匹配@Controller -->
 	<mvc:annotation-driven />
 
 	<!-- 对静态资源文件的访问 不支持访问WEB-INF目录 -->
