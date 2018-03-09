@@ -9,10 +9,12 @@
 
 
 	<settings>
+		
+		<setting name="cacheEnabled" value="true"/>
 		<setting name="callSettersOnNulls" value="true" /> <!-- 为空的字段也返回 -->
 		<!-- 日志配置，参考官方文档http://www.mybatis.org/mybatis-3/zh/logging.html -->
 		<setting name="logImpl" value="LOG4J" />
-		<!-- <setting name="logPrefix" value="dao." /> -->
+		<setting name="logPrefix" value="dao." />
 	</settings>
 	
 	<!-- 配置实体对应的名称 -->
