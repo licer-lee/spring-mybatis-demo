@@ -164,6 +164,11 @@
 			<version>2.1.6</version>
 		</dependency> -->
 
+		<dependency>
+			<groupId>org.mybatis.caches</groupId>
+			<artifactId>mybatis-redis</artifactId>
+			<version>1.0.0-beta2</version>
+		</dependency>
 
 
 		<!-- orm -->
@@ -181,6 +186,9 @@
 		</dependency>
 		<!-- 文件上传下载依赖end -->
 
+
+
+		
 
 	</dependencies>
 
