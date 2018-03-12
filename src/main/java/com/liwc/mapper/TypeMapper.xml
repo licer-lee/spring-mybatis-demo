@@ -3,7 +3,7 @@
 <mapper namespace="com.liwc.mapper.TypeMapper">
 	
 	<!-- 开启二级缓存 -->
-	<cache />
+	<cache type="org.mybatis.caches.redis.RedisCache"/>
 	
 	<resultMap id="BaseResultMap" type="com.liwc.model.Type">
 		<id column="ACCOUNT_TYPE_ID" jdbcType="INTEGER" property="typeId" />
