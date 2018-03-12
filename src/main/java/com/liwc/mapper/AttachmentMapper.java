@@ -1,7 +1,10 @@
 package com.liwc.mapper;
 
+import org.mybatis.spring.annotation.MapperScan;
+
 import com.liwc.model.Attachment;
 
+@MapperScan
 public interface AttachmentMapper {
 	int deleteByPrimaryKey(String fileId);
 
