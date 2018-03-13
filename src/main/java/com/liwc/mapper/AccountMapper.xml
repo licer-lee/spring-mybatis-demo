@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liwc.mapper.AccountMapper">
 
+	<!-- 开启二级缓存 -->
+	<cache />
+
 	<resultMap id="BaseResultMap" type="com.liwc.model.Account">
-		<!-- <constructor> <idArg column="ID" javaType="int" /> </constructor> -->
-
 		<id column="ID" jdbcType="INTEGER" property="id" />
-
 		<result column="ACCOUNT_STR" jdbcType="VARCHAR" property="accountStr" />
 		<result column="PASSWD_STR" jdbcType="VARCHAR" property="passwdStr" />
 		<result column="NOTE" jdbcType="VARCHAR" property="note" />
@@ -15,7 +15,6 @@
 			<id property="typeId" column="ACCOUNT_TYPE_ID" />
 			<result property="typeCode" column="ACCOUNT_TYPE_CODE" />
 			<result property="typeName" column="ACCOUNT_TYPE_NAME" />
-
 		</association>
 	</resultMap>
 
