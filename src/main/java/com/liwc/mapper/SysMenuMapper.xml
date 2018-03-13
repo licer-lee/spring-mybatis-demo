@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liwc.mapper.SysMenuMapper">
+	
+	
+	
+	<resultMap id="BaseResultMap" type="com.liwc.model.SysMenu">
+		<id column="ID" jdbcType="INTEGER" property="id" />
+		<result column="M_CODE" jdbcType="VARCHAR" property="mCode" />
+		<result column="M_NAME" jdbcType="VARCHAR" property="mName" />
+		<result column="M_URL" jdbcType="VARCHAR" property="mUrl" />
+		<result column="M_ORDER" jdbcType="INTEGER" property="mOrder" />
+		<result column="M_PARENT" jdbcType="INTEGER" property="mParent" />
+	</resultMap>
+	
+	
+	<sql id="Base_Column_List">
+		ID, M_CODE, M_NAME, M_URL, M_ORDER, M_PARENT
+	</sql>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from SYS_MENU
+		where ID = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from SYS_MENU
+		where ID = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.liwc.model.SysMenu">
+		insert into SYS_MENU (ID, M_CODE, M_NAME,
+		M_URL, M_ORDER, M_PARENT
+		)
+		values (#{id,jdbcType=INTEGER}, #{mCode,jdbcType=VARCHAR},
+		#{mName,jdbcType=VARCHAR},
+		#{mUrl,jdbcType=VARCHAR}, #{mOrder,jdbcType=INTEGER}, #{mParent,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.liwc.model.SysMenu">
+		insert into SYS_MENU
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				ID,
+			</if>
+			<if test="mCode != null">
+				M_CODE,
+			</if>
+			<if test="mName != null">
+				M_NAME,
+			</if>
+			<if test="mUrl != null">
+				M_URL,
+			</if>
+			<if test="mOrder != null">
+				M_ORDER,
+			</if>
+			<if test="mParent != null">
+				M_PARENT,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="mCode != null">
+				#{mCode,jdbcType=VARCHAR},
+			</if>
+			<if test="mName != null">
+				#{mName,jdbcType=VARCHAR},
+			</if>
+			<if test="mUrl != null">
+				#{mUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="mOrder != null">
+				#{mOrder,jdbcType=INTEGER},
+			</if>
+			<if test="mParent != null">
+				#{mParent,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.liwc.model.SysMenu">
+		update SYS_MENU
+		<set>
+			<if test="mCode != null">
+				M_CODE = #{mCode,jdbcType=VARCHAR},
+			</if>
+			<if test="mName != null">
+				M_NAME = #{mName,jdbcType=VARCHAR},
+			</if>
+			<if test="mUrl != null">
+				M_URL = #{mUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="mOrder != null">
+				M_ORDER = #{mOrder,jdbcType=INTEGER},
+			</if>
+			<if test="mParent != null">
+				M_PARENT = #{mParent,jdbcType=INTEGER},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.liwc.model.SysMenu">
+		update SYS_MENU
+		set M_CODE = #{mCode,jdbcType=VARCHAR},
+		M_NAME = #{mName,jdbcType=VARCHAR},
+		M_URL = #{mUrl,jdbcType=VARCHAR},
+		M_ORDER = #{mOrder,jdbcType=INTEGER},
+		M_PARENT = #{mParent,jdbcType=INTEGER}
+		where ID = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>
